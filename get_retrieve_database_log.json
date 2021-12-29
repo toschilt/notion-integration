@@ -1,34 +1,64 @@
-{'object': 'database',
- 'id': '7311c706-48f3-49b4-bb96-3cac5c147bce',
- 'cover': None,
- 'icon': None,
- 'created_time': '2021-12-29T17:35:00.000Z',
- 'last_edited_time': '2021-12-29T17:35:00.000Z',
- 'title': [{'type': 'text',
-            'text': {'content': 'teste',
-                      'link': None},
-                      'annotations': {'bold': False,
-                                      'italic': False,
-                                      'strikethrough': False,
-                                      'underline': False,
-                                      'code': False,
-                                      'color': 'default'},
-                                      'plain_text': 'teste',
-                                      'href': None}],
-'properties': {'Tags': {'id': '%40q%5BM',
-                        'name': 'Tags',
-                        'type': 'multi_select',
-                        'multi_select': {'options': [{'id': '94217288-6c13-4485-92d5-90e9ce6a59ef',
-                                                      'name': 'b',
-                                                      'color': 'green'},
-                                                      {'id': 'ec200877-f4f4-40b2-8644-1c8469bf32ab',
-                                                       'name': 'b1',
-                                                       'color': 'orange'},
-                                                       {'id': 'd65b414e-0e74-4e4e-b5ad-f976d279a9d1',
-                                                        'name': 'b2', 'color': 'yellow'}]}},
-             'Name': {'id': 'title',
-                      'name': 'Name',
-                      'type': 'title', 'title': {}}}, 
-            'parent': {'type': 'page_id',
-                       'page_id': 'f550138c-4819-4155-b75e-7c06bb70ab53'},
-                       'url': 'https://www.notion.so/7311c70648f349b4bb963cac5c147bce'}
+{
+  "object": "database",
+  "id": "7311c706-48f3-49b4-bb96-3cac5c147bce",
+  "cover": null,
+  "icon": null,
+  "created_time": "2021-12-29T17:35:00.000Z",
+  "last_edited_time": "2021-12-29T17:35:00.000Z",
+  "title": [
+    {
+      "type": "text",
+      "text": {
+        "content": "teste",
+        "link": null
+      },
+      "annotations": {
+        "bold": false,
+        "italic": false,
+        "strikethrough": false,
+        "underline": false,
+        "code": false,
+        "color": "default"
+      },
+      "plain_text": "teste",
+      "href": null
+    }
+  ],
+  "properties": {
+    "Tags": {
+      "id": "%40q%5BM",
+      "name": "Tags",
+      "type": "multi_select",
+      "multi_select": {
+        "options": [
+          {
+            "id": "94217288-6c13-4485-92d5-90e9ce6a59ef",
+            "name": "b",
+            "color": "green"
+          },
+          {
+            "id": "ec200877-f4f4-40b2-8644-1c8469bf32ab",
+            "name": "b1",
+            "color": "orange"
+          },
+          {
+            "id": "d65b414e-0e74-4e4e-b5ad-f976d279a9d1",
+            "name": "b2",
+            "color": "yellow"
+          }
+        ]
+      }
+    },
+    "Name": {
+      "id": "title",
+      "name": "Name",
+      "type": "title",
+      "title": {}
+    }
+  },
+  "parent": {
+    "type": "page_id",
+    "page_id": "f550138c-4819-4155-b75e-7c06bb70ab53"
+  },
+  "url": "https://www.notion.so/7311c70648f349b4bb963cac5c147bce"
+}
