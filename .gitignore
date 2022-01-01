@@ -1,4 +1,5 @@
-/secrets.py
-/auth.json
 __pycache__
+/secrets.py
+
+logs
 *.json

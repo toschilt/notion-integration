@@ -1,8 +1,0 @@
-{
-    "name": "toschoboto",
-    "version": "1.0.0",
-    "description": "the toscoloco bot",
-    "main": "bot.js",
-    "author": "Lucas Toschi",
-    "dependencies": {}
-}
