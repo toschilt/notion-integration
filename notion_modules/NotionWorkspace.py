@@ -3,7 +3,7 @@ from notion_modules.NotionDatabase import NotionDatabase
 import requests
 import json
 
-#Encapsule all the comunication with a specific Notion workspace.
+#Encapsule all the comunication within a specific Notion workspace.
 class NotionWorkspace:
 
     #Constructor. Needs the private key to the Notion Database.
