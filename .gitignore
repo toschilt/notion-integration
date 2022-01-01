@@ -1,3 +1,4 @@
 /secrets.py
 /auth.json
 __pycache__
+*.json
