@@ -23,10 +23,11 @@ def copyEntriesBetweenDatabases(databaseFrom, databaseTo):
     entries = databaseFromData["results"]
 
     for entry in entries:
+         # For each entry of the database...
+
         #Initialize the data dictionary for page creation.
         newPageData = resetNewPageData(databaseTo)
-
-        # For each entry of the database...
+        
         properties = entry["properties"]
 
         for prop in properties:
