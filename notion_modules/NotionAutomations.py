@@ -17,6 +17,8 @@ def resetNewPageData(databaseTo):
 # Search the attributes from the "databaseFrom" database
 # and copy them to the "databaseTo" database.
 # Both databases has to have the same attribute structure.
+# TODO Copying files isn't working properly.
+# TODO Relation column isn't working properly.
 def copyEntriesBetweenDatabases(databaseFrom, databaseTo):
     #Getting info prom the "databaseFrom" database. 
     databaseFromData = databaseFrom.getDatabaseDataInJSON()
@@ -43,5 +45,9 @@ def copyEntriesBetweenDatabases(databaseFrom, databaseTo):
                 del newPageData["properties"][prop]["multi_select"][0]["id"]
                 del newPageData["properties"][prop]["multi_select"][0]["color"]
 
-        #TODO For many entries, the request frequency can be too high. 
-        print(json.dumps(databaseTo.insertEntry(newPageData).json(), indent = 2))
+            if newPageData["properties"][prop]["type"] == "select":
+                del newPageData["properties"][prop]["select"]["id"]
+                del newPageData["properties"][prop]["select"]["color"]
+
+        #TODO For many entries, the request frequency can be too high.
+        databaseTo.insertEntry(newPageData)
