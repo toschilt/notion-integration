@@ -2,6 +2,7 @@ from notion_modules import NotionConstants
 import requests
 import json
 
+#Encapsule all the comunication within a specific Notion database.
 class NotionDatabase:
 
     #Constructor. Needs the private key of the workspace
@@ -50,3 +51,18 @@ class NotionDatabase:
     def getDatabaseDataToPrint(self, q_indent = 2):
         response = self.getDatabaseDataInJSON()
         return json.dumps(response, indent = q_indent)
+    
+    #Creates and insert a new page in the database.
+    #Needs a python dictionary to be JSON serialized.
+    def insertEntry(self, dataJSON):
+        #TODO Generalize header definition?
+        header = {"Authorization":self.privateKey, 
+                  "Notion-Version":NotionConstants.notionVersion,
+                  "Content-Type":"application/json"}
+
+        response = requests.post(NotionConstants.base_url_page,
+                                 headers = header,
+                                 data = json.dumps(dataJSON))
+
+        return response
+               
