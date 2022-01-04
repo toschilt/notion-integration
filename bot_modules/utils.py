@@ -1,0 +1,1 @@
+#TODO Implement log function to mantain track of the commands.

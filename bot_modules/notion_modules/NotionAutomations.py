@@ -1,5 +1,5 @@
-from notion_modules.NotionWorkspace import NotionWorkspace
-from notion_modules.NotionDatabase import NotionDatabase
+from bot_modules.notion_modules.NotionWorkspace import NotionWorkspace
+from bot_modules.notion_modules.NotionDatabase import NotionDatabase
 import json
 
 # Resets the newPageData dictionary to insert a new entry.

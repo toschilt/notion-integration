@@ -1,4 +1,4 @@
-from notion_modules import NotionConstants
+from bot_modules.notion_modules import NotionConstants
 import requests
 import json
 

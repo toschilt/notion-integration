@@ -1,5 +1,5 @@
-from notion_modules import NotionConstants
-from notion_modules.NotionDatabase import NotionDatabase
+from bot_modules.notion_modules import NotionConstants
+from bot_modules.notion_modules.NotionDatabase import NotionDatabase
 import requests
 import json
 
