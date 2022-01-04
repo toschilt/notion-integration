@@ -1,6 +1,5 @@
 __pycache__
-/secrets.py
-discord_modules/secrets.py
+secrets.py
 
 logs
 *.json
