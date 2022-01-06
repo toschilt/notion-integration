@@ -6,6 +6,7 @@ import json
 from bot_modules.config import jsonDatabasesRegisteredNotionPath
 
 #TODO Defines secretToken keyword in config file.
+#TODO The try/except case works for empty files, but it's not secure in case of other errors.
 async def registerWorkspace(context, alias, secretToken):  
     #Gets the already registered workspaces
     registers = {}
