@@ -1,11 +1,14 @@
 #TODO How to deal with import secrets here?
 import secrets
 
+import os
 from bot_modules.notion_modules import NotionWorkspace
 from discord.ext.commands import Bot
 
 #Notion configurations
-storageNotionComponentsFilePath = "../databases/registered_notion.json"
+botModulesPath = os.path.dirname(__file__)
+jsonDatabasesPath = botModulesPath + "/databases"
+jsonDatabasesRegisteredNotionPath = jsonDatabasesPath + "/registered_notion.json"
 
 #TODO Remove this later
 personalWorkspace = NotionWorkspace.NotionWorkspace(secrets.NotionKEY)
