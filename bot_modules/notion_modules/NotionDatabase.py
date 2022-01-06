@@ -54,6 +54,7 @@ class NotionDatabase:
 
     #Gets the data from a ID database and formats it to a
     #human-friendly table
+    #TODO Super ugly - needs refactoring
     def getDatabaseDataToTablePrint(self):
         response = self.getDatabaseData()
         tableRows = response.json()["results"]

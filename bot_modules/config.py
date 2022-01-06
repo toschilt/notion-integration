@@ -5,7 +5,9 @@ from bot_modules.notion_modules import NotionWorkspace
 from discord.ext.commands import Bot
 
 #Notion configurations
-#TODO Storage the database and workspace objects persistently
+storageNotionComponentsFilePath = "../databases/registered_notion.json"
+
+#TODO Remove this later
 personalWorkspace = NotionWorkspace.NotionWorkspace(secrets.NotionKEY)
 
 #Bot configurations
