@@ -9,10 +9,11 @@ from bot_modules.config import *
 available_commands = {
     "help": [],
     "retrieveTasks": ["rt", "tasks", "tarefas"],
-    "registerWorkspace": ["rw"]
+    "registerWorkspace": ["rw"],
+    "registerDatabase": ["rd"]
 }
 
-#Implements the register command.
+
 #context: the Discord Bot context of the command;
 #alias: the name that the workspace is known.
 #secretToken: the private token of the workpace integration
@@ -20,7 +21,15 @@ available_commands = {
 async def registerWorkspace(context, alias, secretToken):
     await cmd.registerWorkspace.registerWorkspace(context, alias, secretToken)
 
-#Implements the retrieveTasks command.
+#context: the Discord Bot context of the command;
+#databaseAlias: the name that the database is known.
+#id: the id of the database
+#workspaceAlias: the alias of its workspace
+@sid.command(aliases = available_commands["registerDatabase"])
+async def registerDatabase(context, databaseAlias, id, workspaceAlias):
+    await cmd.registerDatabase.registerDatabase(context, databaseAlias, id, workspaceAlias)
+
+#databaseID: the id of the database
 @sid.command(aliases = available_commands["retrieveTasks"])
 async def retrieveTasks(context, databaseID):
     await cmd.retrieveTasks.retrieveTasks(context, personalWorkspace, databaseID, secrets.NotionKEY)

@@ -25,7 +25,8 @@ async def registerWorkspace(context, alias, secretToken):
     #If the secretToken doesn't exists, insert it into file.
     #If exists, gives a warning to the user.
     if not alreadyExists:
-        registers[alias] = {'secretToken': secretToken}
+        registers[alias] = {'secretToken': secretToken,
+                            'databases': {}}
         json_object = json.dumps(registers, indent = 2)
 
         with open(jsonDatabasesRegisteredNotionPath, "w") as outfile:
@@ -34,4 +35,4 @@ async def registerWorkspace(context, alias, secretToken):
         await context.send("Registrado!")
     
     else:
-        await context.send("Chave secreta já existe no database!")
+        await context.send("Chave secreta já existe no registro interno!")
