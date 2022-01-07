@@ -1,3 +1,4 @@
 import bot_modules.commands.retrieveTasks
 import bot_modules.commands.registerWorkspace
 import bot_modules.commands.registerDatabase
+import bot_modules.commands.listWorkspaces
