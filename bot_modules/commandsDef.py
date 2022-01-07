@@ -10,6 +10,7 @@ available_commands = {
     "help": [],
     "retrieveTasks": ["rt", "tasks", "tarefas"],
     "listWorkspaces": ["lw"],
+    "listDatabases": ["ld"],
     "registerWorkspace": ["rw"],
     "registerDatabase": ["rd"]
 }
@@ -23,6 +24,11 @@ async def retrieveTasks(context, databaseID):
 @sid.command(aliases = available_commands["listWorkspaces"])
 async def listWorkspaces(context):
     await cmd.listWorkspaces.listWorkspaces(context)
+
+#workspaceAlias: the workspace that the user wants to list the databases
+@sid.command(aliases = available_commands["listDatabases"])
+async def listDatabases(context, workspaceAlias):
+    await cmd.listDatabases.listDatabases(context, workspaceAlias)
 
 #alias: the name that the workspace is known.
 #secretToken: the private token of the workpace integration
