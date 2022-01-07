@@ -6,6 +6,7 @@ from bot_modules.config import jsonDatabasesRegisteredNotionPath
 
 #TODO Defines databases keyword in config file.
 #TODO Defines id keyword in config file.
+#TODO Databases can have same alias. That's a problem when retrieving entries.
 async def registerDatabase(context, databaseAlias, id, workspaceAlias):
     #Gets the already registered workspaces
     registers = {}

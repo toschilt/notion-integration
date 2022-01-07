@@ -58,7 +58,7 @@ class NotionDatabase:
     def getDatabaseDataToTablePrint(self):
         response = self.getDatabaseData()
         tableRows = response.json()["results"]
-        print(json.dumps(tableRows, indent = 2))
+
         strLoad = ''
 
         #TODO Enable table customization

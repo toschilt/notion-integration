@@ -1,6 +1,3 @@
-#TODO How to deal with import secrets here?
-import secrets
-
 import bot_modules.commands as cmd
 from bot_modules.config import *
 
@@ -16,10 +13,10 @@ available_commands = {
 }
 
 #TODO Need to adapt to the new register system.
-#databaseID: the id of the database
+#databaseID: the alias of the desired database
 @sid.command(aliases = available_commands["retrieveTasks"])
-async def retrieveTasks(context, databaseID):
-    await cmd.retrieveTasks.retrieveTasks(context, personalWorkspace, databaseID, secrets.NotionKEY)
+async def retrieveTasks(context, databaseAlias):
+    await cmd.retrieveTasks.retrieveTasks(context, databaseAlias)
 
 @sid.command(aliases = available_commands["listWorkspaces"])
 async def listWorkspaces(context):
