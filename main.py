@@ -1,7 +1,7 @@
 #TODO Change the secrets local, it's better in a separated file.
 
 import secrets
-from bot_modules.config import sid
+import bot_modules.config
 
 if __name__ == '__main__':
-    sid.run(secrets.DiscordKEY)
+    bot_modules.config.sid.run(secrets.DiscordKEY)

@@ -12,7 +12,6 @@ available_commands = {
     "registerDatabase": ["rd"]
 }
 
-#TODO Need to adapt to the new register system.
 #databaseID: the alias of the desired database
 @sid.command(aliases = available_commands["retrieveTasks"])
 async def retrieveTasks(context, databaseAlias):
