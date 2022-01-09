@@ -4,24 +4,18 @@
 
 import json
 from bot_modules.config import jsonDatabasesRegisteredNotionPath
+from bot_modules.utils import readJSONFileAsDict
 
 #TODO Defines databases keyword in config file.
 async def listDatabases(context, workspaceAlias):
     #Gets the already registered workspaces
-    registers = {}
-    isEmpty = True
-    with open(jsonDatabasesRegisteredNotionPath, "r") as openfile:
-        try:
-            registers = json.load(openfile)
-            isEmpty = False
-        except json.decoder.JSONDecodeError:
-            pass
+    registers = readJSONFileAsDict(jsonDatabasesRegisteredNotionPath)
 
-    if not isEmpty:
+    if registers is not None:
         strLoad = "Databases registrados no workpace " + workspaceAlias + ": \n"
-    
+        
+        #Checks for the target database
         databasesExist = False
-        #TODO Maybe is a more elegant way to implement this.
         try:
             for database in registers[workspaceAlias]["databases"]:
                 databasesExist = True
