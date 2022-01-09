@@ -3,19 +3,13 @@
 
 import json
 from bot_modules.config import jsonDatabasesRegisteredNotionPath
+from bot_modules.utils import readJSONFileAsDict
 
 async def listWorkspaces(context):
     #Gets the already registered workspaces
-    registers = {}
-    isEmpty = True
-    with open(jsonDatabasesRegisteredNotionPath, "r") as openfile:
-        try:
-            registers = json.load(openfile)
-            isEmpty = False
-        except json.decoder.JSONDecodeError:
-            pass
+    registers = readJSONFileAsDict(jsonDatabasesRegisteredNotionPath)
 
-    if not isEmpty:
+    if registers is not None:
         strLoad = "Workspaces registrados: \n"
         for register in registers:
             strLoad = strLoad + register + "\n"
