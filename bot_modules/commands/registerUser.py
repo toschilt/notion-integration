@@ -8,61 +8,70 @@ from bot_modules.notion_modules.NotionWorkspace import NotionWorkspace
 from bot_modules.config import jsonUsersRegisteredPath
 from bot_modules.config import jsonDatabasesRegisteredNotionPath
 
+from bot_modules.utils import readJSONFileAsDict
+
 #TODO Other commands use this same function. Generalize for all of them.
 def constructWorkspace(workspaceAlias):
-    jsonData = {}
-    with open(jsonDatabasesRegisteredNotionPath, "r") as openfile:
-        try:
-            jsonData = json.load(openfile)
-        except json.decoder.JSONDecodeError:
-            pass
-
-    targetWorkspaceData = {}
-    for workspace in jsonData:
-        if workspace == workspaceAlias:
-            targetWorkspaceData = jsonData[workspace]
-            break
-
-    workspaceObject = NotionWorkspace(targetWorkspaceData["secretToken"])
+    jsonData = readJSONFileAsDict(jsonDatabasesRegisteredNotionPath)
     
-    return workspaceObject
+    if jsonData is not None:
+        targetWorkspaceData = {}
+
+        for workspace in jsonData:
+            if workspace == workspaceAlias:
+                targetWorkspaceData = jsonData[workspace]
+                break
+
+        if targetWorkspaceData:
+            workspaceObject = NotionWorkspace(targetWorkspaceData["secretToken"])
+            return workspaceObject
+        else:
+            return None
+
+    else:
+        return None
 
 #TODO define Discord and Notion keyword in config file.
 #TODO Defines id and name keyword in config file.
-#Compound names must be within quotes.
+#TODO Explicit in help that compound names must be within quotes.
 async def registerUser(context, notionUsername, notionWorkspace):
     #Gets the already registered users
-    users = {}
-    with open(jsonUsersRegisteredPath, "r") as openfile:
-        try:
-            users = json.load(openfile)
-        except json.decoder.JSONDecodeError:
-            pass
+    users = readJSONFileAsDict(jsonUsersRegisteredPath)
 
     discordID = context.author.id
     discordName = context.author.name
 
-    workspaceObject = constructWorkspace(notionWorkspace)
-    notionUsers = workspaceObject.getAllUsers().json()
+    workspaceObject = constructWorkspace(notionWorkspace)    
+    if workspaceObject is not None:
+        notionUsers = workspaceObject.getAllUsers().json()
 
-    notionID = None
-    notionName = None
-    for user in notionUsers["results"]:
-        if(user["name"] == notionUsername):
-            notionName = user["name"]
-            notionID = user["id"]
-            break
-        
-    #Uses the user Discord ID as primary key.
-    users[discordID] = {"discord": {"id": discordID,
-                                    "name": discordName},
-                        "notion":  {"id": notionID,
-                                    "name": notionName}}
+        notionID = None
+        notionName = None
+        for user in notionUsers["results"]:
+            if(user["name"] == notionUsername):
+                notionName = user["name"]
+                notionID = user["id"]
+                break
+    
+        #Checks if the Notion info is valid
+        if notionID is not None and notionName is not None:
+    
+            #Uses the user Discord ID as primary key.
+            users[discordID] = {"discord": {"id": discordID,
+                                            "name": discordName},
+                                "notion":  {"id": notionID,
+                                            "name": notionName}}
 
-    with open(jsonUsersRegisteredPath, "w") as outfile:
-        outfile.write(json.dumps(users, indent = 2))
-        await context.send("Registrado!")
+            with open(jsonUsersRegisteredPath, "w") as outfile:
+                outfile.write(json.dumps(users, indent = 2))
+                await context.send("Registrado!")
+        else:
+            await context.send("Não encontrei esse nome no workspace do Notion fornecido!")
+    else:
+        await context.send("O nome do workspace do Notion não está cadastado/é inválido!")
 
+
+    #Testing - clean later
     #print(context.author.name)
     #print(context.author.public_flags)
     #print(context.author.dm_channel)
