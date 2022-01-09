@@ -9,7 +9,8 @@ available_commands = {
     "listWorkspaces": ["lw"],
     "listDatabases": ["ld"],
     "registerWorkspace": ["rw"],
-    "registerDatabase": ["rd"]
+    "registerDatabase": ["rd"],
+    "replicateDatabase": ["repd"]
 }
 
 #databaseID: the alias of the desired database
@@ -38,3 +39,9 @@ async def registerWorkspace(context, alias, secretToken):
 @sid.command(aliases = available_commands["registerDatabase"])
 async def registerDatabase(context, databaseAlias, id, workspaceAlias):
     await cmd.registerDatabase.registerDatabase(context, databaseAlias, id, workspaceAlias)
+
+#databaseFromAlias: the database that the data comes from.
+#databaseToAlias: the database that the data comes to.
+@sid.command(aliases = available_commands["replicateDatabase"])
+async def replicateDatabase(context, databaseFromAlias, databaseToAlias):
+    await cmd.replicateDatabase.replicateDatabase(context, databaseFromAlias, databaseToAlias)

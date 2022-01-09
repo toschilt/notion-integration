@@ -9,6 +9,7 @@ from bot_modules.notion_modules import NotionDatabase
 
 #TODO Defines secretToken keyword in config file.
 #TODO Defines id keyword in config file.
+#TODO Defines database keyword in config file.
 #TODO Treatment when some info not match the register.
 async def retrieveTasks(context, databaseAlias):
     registers = {}
