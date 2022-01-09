@@ -16,7 +16,7 @@ def resetNewPageData(databaseTo):
 
 # Search the attributes from the "databaseFrom" database
 # and copy them to the "databaseTo" database.
-# Both databases has to have the same attribute structure.
+# Both databases has to have the same attribute structure (name and types).
 # TODO Copying files isn't working properly.
 # TODO Relation column isn't working properly.
 def copyEntriesBetweenDatabases(databaseFrom, databaseTo):
