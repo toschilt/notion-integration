@@ -50,4 +50,5 @@ def copyEntriesBetweenDatabases(databaseFrom, databaseTo):
                 del newPageData["properties"][prop]["select"]["color"]
 
         #TODO For many entries, the request frequency can be too high.
+        print(json.dumps(newPageData, indent = 2))
         databaseTo.insertEntry(newPageData)

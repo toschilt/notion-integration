@@ -16,3 +16,13 @@ class NotionWorkspace:
     def addDatabase(self, alias, id):
         self.databases[alias] = NotionDatabase(self.privateKey, id)
         return self.databases[alias]
+
+    #Gets all the users that have access to the workspace.
+    def getAllUsers(self):
+        header = {"Authorization":self.privateKey, 
+                  "Notion-Version":NotionConstants.notionVersion}
+
+        response = requests.get(NotionConstants.base_url_user,
+                                headers = header)
+
+        return response

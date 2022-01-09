@@ -10,7 +10,8 @@ available_commands = {
     "listDatabases": ["ld"],
     "registerWorkspace": ["rw"],
     "registerDatabase": ["rd"],
-    "replicateDatabase": ["repd"]
+    "replicateDatabase": ["repd"],
+    "registerUser": ["ru"]
 }
 
 #databaseID: the alias of the desired database
@@ -45,3 +46,7 @@ async def registerDatabase(context, databaseAlias, id, workspaceAlias):
 @sid.command(aliases = available_commands["replicateDatabase"])
 async def replicateDatabase(context, databaseFromAlias, databaseToAlias):
     await cmd.replicateDatabase.replicateDatabase(context, databaseFromAlias, databaseToAlias)
+
+@sid.command(aliases = available_commands["registerUser"])
+async def registerUser(context, notionUsername, notionWorkspace):
+    await cmd.registerUser.registerUser(context, notionUsername, notionWorkspace)

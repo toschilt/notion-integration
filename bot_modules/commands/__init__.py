@@ -4,3 +4,4 @@ import bot_modules.commands.registerDatabase
 import bot_modules.commands.listWorkspaces
 import bot_modules.commands.listDatabases
 import bot_modules.commands.replicateDatabase
+import bot_modules.commands.registerUser
