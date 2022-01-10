@@ -18,6 +18,8 @@ async def registerWorkspace(context, alias, secretToken):
         for register in registers:
             if(registers[register]['secretToken'] == secretToken):
                 alreadyExists = True
+    else:
+        registers = {}
 
     #If the secretToken doesn't exists, insert it into file.
     #If exists, gives a warning to the user.

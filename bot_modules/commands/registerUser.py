@@ -38,6 +38,9 @@ async def registerUser(context, notionUsername, notionWorkspace):
     #Gets the already registered users
     users = readJSONFileAsDict(jsonUsersRegisteredPath)
 
+    if users is None:
+        users = {}
+
     discordID = context.author.id
     discordName = context.author.name
 
@@ -64,7 +67,9 @@ async def registerUser(context, notionUsername, notionWorkspace):
 
             with open(jsonUsersRegisteredPath, "w") as outfile:
                 outfile.write(json.dumps(users, indent = 2))
-                await context.send("Registrado!")
+                
+            await context.send("Registrado!")
+        
         else:
             await context.send("Não encontrei esse nome no workspace do Notion fornecido!")
     else:

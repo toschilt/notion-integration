@@ -27,6 +27,8 @@ async def registerDatabase(context, databaseAlias, id, workspaceAlias):
                 if(registeredID == id):
                     alreadyExists = True
                     break
+    else:
+        registers = {}
 
     if not alreadyExists:
         registers[workspaceAlias]["databases"][databaseAlias] = {"id": id}
