@@ -1,4 +1,4 @@
-#TODO Change the secrets local, it's better in a separated file.
+#TODO Change the secrets local, it's better in a separated file...
 
 import secrets
 import bot_modules.config
