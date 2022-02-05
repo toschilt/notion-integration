@@ -1,9 +1,14 @@
+import json
 import os
 from discord.ext.commands import Bot
 
 #Path basic configuration
 botModulesPath = os.path.dirname(__file__)
 jsonDatabasesPath = botModulesPath + "/databases"
+
+#Create the database folder, if it not exist.
+if not os.path.exists(jsonDatabasesPath):
+    os.mkdir(jsonDatabasesPath)
 
 #Notion configurations
 jsonDatabasesRegisteredNotionPath = jsonDatabasesPath + "/registered_notion.json"

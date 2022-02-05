@@ -8,7 +8,11 @@ from bot_modules.utils import readJSONFileAsDict
 
 #TODO Defines secretToken keyword in config file.
 #TODO Register workspace that already exists overwrites the json file. Ask user if that is intended.
-async def registerWorkspace(context, alias, secretToken):  
+async def registerWorkspace(context, alias, secretToken):
+    #Check if the JSON file exists. If not, create it.
+    if not os.path.exists(jsonDatabasesRegisteredNotionPath):
+        with open(jsonDatabasesRegisteredNotionPath, 'w'): pass
+
     #Gets the already registered workspaces
     registers = readJSONFileAsDict(jsonDatabasesRegisteredNotionPath)
     
