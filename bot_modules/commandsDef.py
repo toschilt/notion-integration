@@ -11,7 +11,8 @@ available_commands = {
     "registerWorkspace": ["rw"],
     "registerDatabase": ["rd"],
     "replicateDatabase": ["repd"],
-    "registerUser": ["ru"]
+    "registerUser": ["ru"],
+    "setSpecialDatabase": ["sed"]
 }
 
 #databaseID: the alias of the desired database
@@ -40,6 +41,11 @@ async def registerWorkspace(context, alias, secretToken):
 @sid.command(aliases = available_commands["registerDatabase"])
 async def registerDatabase(context, databaseAlias, id, workspaceAlias):
     await cmd.registerDatabase.registerDatabase(context, databaseAlias, id, workspaceAlias)
+
+#specialFunction: indicates if the database has a special function.
+@sid.command(aliases = available_commands["setSpecialDatabase"])
+async def setSpecialDatabase(context, databaseAlias, specialFunction):
+    await cmd.setSpecialDatabase.setSpecialDatabase(context, databaseAlias, specialFunction)
 
 #databaseFromAlias: the database that the data comes from.
 #databaseToAlias: the database that the data comes to.

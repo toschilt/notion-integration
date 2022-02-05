@@ -25,10 +25,16 @@ if not os.path.exists(jsonDatabasesRegisteredNotionPath):
 
 #----- BOT CONFIGURATIONS -----
 jsonUsersRegisteredPath = jsonDatabasesPath + "/users.json"
+jsonSpecialDatabases = jsonDatabasesPath + "/special_databases.json"
 
 #Check if the JSON user file exists. If not, create it.
 if not os.path.exists(jsonUsersRegisteredPath):
     with open(jsonUsersRegisteredPath, 'w'):
+        pass
+
+#Check if the JSON special databases file exists. If not, create it.
+if not os.path.exists(jsonSpecialDatabases):
+    with open(jsonSpecialDatabases, 'w'):
         pass
 
 #TODO Elaborate a cool description for the bot.
