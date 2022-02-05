@@ -37,6 +37,9 @@ if not os.path.exists(jsonSpecialDatabases):
     with open(jsonSpecialDatabases, 'w'):
         pass
 
+
+
+#----- BOT START -----
 #TODO Elaborate a cool description for the bot.
 sid = Bot(command_prefix = "!",
           description = "")
