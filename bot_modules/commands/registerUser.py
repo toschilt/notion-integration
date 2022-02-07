@@ -3,84 +3,81 @@
 
 import json
 
-from bot_modules.notion_modules.NotionWorkspace import NotionWorkspace
+from bot_modules.notion_modules.NotionWorkspace import NotionDatabase
 
 from bot_modules.config import jsonUsersRegisteredPath
 from bot_modules.config import jsonDatabasesRegisteredNotionPath
+from bot_modules.config import jsonSpecialDatabases
 
 from bot_modules.utils import readJSONFileAsDict
 
-#TODO Other commands use this same function. Generalize for all of them.
-def constructWorkspace(workspaceAlias):
-    jsonData = readJSONFileAsDict(jsonDatabasesRegisteredNotionPath)
-    
-    if jsonData is not None:
-        targetWorkspaceData = {}
-
-        for workspace in jsonData:
-            if workspace == workspaceAlias:
-                targetWorkspaceData = jsonData[workspace]
-                break
-
-        if targetWorkspaceData:
-            workspaceObject = NotionWorkspace(targetWorkspaceData["secretToken"])
-            return workspaceObject
-        else:
-            return None
-
-    else:
-        return None
-
 #TODO define Discord and Notion keyword in config file.
-#TODO Defines id and name keyword in config file.
-#TODO Explicit in help that compound names must be within quotes.
-async def registerUser(context, notionUsername, notionWorkspace):
-    #Gets the already registered users
-    users = readJSONFileAsDict(jsonUsersRegisteredPath)
+#TODO Defines keyworks in config file.
+#TODO Explicit in help that the user info is always overrided.
+async def registerUser(context, email):
+    #Gets the special databases registered.
+    #The registerUser command only runs if the needed special database is registered.
+    specialDatabases = readJSONFileAsDict(jsonSpecialDatabases)
+    workspaceName = None
+    databaseName = None
+    
+    if specialDatabases is not None:
+        workspaceName = specialDatabases["DEF_MEMBERS"]["workspace"]
+        databaseName = specialDatabases["DEF_MEMBERS"]["database"]
+        
+    if workspaceName is not None and databaseName is not None:
+        discordID = str(context.author.id)
+        discordName = context.author.name
+        
+        #Gets the already registered users.
+        users = readJSONFileAsDict(jsonUsersRegisteredPath)
+        if users is None:
+            users = {}
 
-    if users is None:
-        users = {}
+        #Gets the member info from Notion database.
+        workspaces = readJSONFileAsDict(jsonDatabasesRegisteredNotionPath)
+        workspacePrivateKey = workspaces[workspaceName]["secretToken"]
+        memberDatabaseID = workspaces[workspaceName]["databases"][databaseName]["id"]
 
-    discordID = context.author.id
-    discordName = context.author.name
+        databaseObject = NotionDatabase(workspacePrivateKey, memberDatabaseID)
+        membersData = databaseObject.getDatabaseDataInJSON()
 
-    workspaceObject = constructWorkspace(notionWorkspace)    
-    if workspaceObject is not None:
-        notionUsers = workspaceObject.getAllUsers().json()
-
-        notionID = None
-        notionName = None
-        for user in notionUsers["results"]:
-            if(user["name"] == notionUsername):
-                notionName = user["name"]
-                notionID = user["id"]
+        #Iterate over every single member.
+        #TODO This strategy is not optimal. For a small team, works fine.
+        targetMember = None
+        for member in membersData["results"]:
+            if member["properties"]["E-mail"]["email"] == email:
+                targetMember = member
                 break
-    
-        #Checks if the Notion info is valid
-        if notionID is not None and notionName is not None:
-    
-            #Uses the user Discord ID as primary key.
-            users[discordID] = {"discord": {"id": discordID,
-                                            "name": discordName},
-                                "notion":  {"id": notionID,
-                                            "name": notionName}}
+        
+        #Gets the user metadata.
+        memberMetaData = targetMember["properties"]["Referencia"]["people"][0]
+        notionID = memberMetaData["id"]
+        notionName = memberMetaData["name"]
 
-            with open(jsonUsersRegisteredPath, "w") as outfile:
+        #Gets the projects that the member works on.
+        memberProjects = []
+        for project in targetMember["properties"]["Projetos"]["multi_select"]:
+            memberProjects.append(project["name"])
+
+        #Gets the roles that the member have.
+        memberRoles = []
+        for role in targetMember["properties"]["Cargo"]["multi_select"]:
+            memberRoles.append(role["name"])
+
+        #Compile the info in a single dictionary.
+        users[discordID] = {"discord": {"id": discordID,
+                                        "name": discordName},
+                            "notion":  {"id": notionID,
+                                        "name": notionName},
+                            "roles": memberRoles,
+                            "projects": memberProjects}
+
+        #Write the info down in the file.
+        with open(jsonUsersRegisteredPath, "w") as outfile:
                 outfile.write(json.dumps(users, indent = 2))
                 
-            await context.send("Registrado!")
-        
-        else:
-            await context.send("Não encontrei esse nome no workspace do Notion fornecido!")
+        await context.send("Registrado!")
+
     else:
-        await context.send("O nome do workspace do Notion não está cadastado/é inválido!")
-
-
-    #Testing - clean later
-    #print(context.author.name)
-    #print(context.author.public_flags)
-    #print(context.author.dm_channel)
-    #print(context.author.id)
-    #print(context.author.mention)
-    #print(context.author.roles)
-    #await context.send("Debugging, " + context.author.mention)
+        await context.send("É necessário setar o database de membros com a flag DEF_MEMBERS!")

@@ -53,6 +53,7 @@ async def setSpecialDatabase(context, databaseAlias, specialFunction):
 async def replicateDatabase(context, databaseFromAlias, databaseToAlias):
     await cmd.replicateDatabase.replicateDatabase(context, databaseFromAlias, databaseToAlias)
 
+#email: the email registered in DEF_MEMBERS special database.
 @sid.command(aliases = available_commands["registerUser"])
-async def registerUser(context, notionUsername, notionWorkspace):
-    await cmd.registerUser.registerUser(context, notionUsername, notionWorkspace)
+async def registerUser(context, email):
+    await cmd.registerUser.registerUser(context, email)
