@@ -6,3 +6,4 @@ import bot_modules.commands.listDatabases
 import bot_modules.commands.replicateDatabase
 import bot_modules.commands.registerUser
 import bot_modules.commands.setSpecialDatabase
+import bot_modules.commands.endSprint

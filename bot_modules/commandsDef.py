@@ -12,7 +12,8 @@ available_commands = {
     "registerDatabase": ["rd"],
     "replicateDatabase": ["repd"],
     "registerUser": ["ru"],
-    "setSpecialDatabase": ["sed"]
+    "setSpecialDatabase": ["sed"],
+    "endSprint": ["es"]
 }
 
 #databaseID: the alias of the desired database
@@ -57,3 +58,7 @@ async def replicateDatabase(context, databaseFromAlias, databaseToAlias):
 @sid.command(aliases = available_commands["registerUser"])
 async def registerUser(context, email):
     await cmd.registerUser.registerUser(context, email)
+
+@sid.command(aliases = available_commands["endSprint"])
+async def endSprint(context):
+    await cmd.endSprint.endSprint(context)
