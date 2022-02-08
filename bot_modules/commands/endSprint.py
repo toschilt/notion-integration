@@ -50,5 +50,3 @@ async def endSprint(context):
 
     else:
         await context.send("Se cadastre antes de utilizar esse comando!")
-    
-
