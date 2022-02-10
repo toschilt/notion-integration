@@ -22,6 +22,11 @@ if not os.path.exists(jsonDatabasesRegisteredNotionPath):
         pass
 
 
+#----- GOOGLE INTEGRATION CONFIGURATIONS -----#
+googleModulesPath = botModulesPath + "/google_modules"
+jsonGoogleKey = googleModulesPath + "/google-rmautobot-key.json"
+
+
 
 #----- BOT CONFIGURATIONS -----
 jsonUsersRegisteredPath = jsonDatabasesPath + "/users.json"
