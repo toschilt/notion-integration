@@ -13,6 +13,6 @@ sprintDocument = SprintDocument(jsonGoogleKey, DOCUMENT_ID)
 async def on_message(message):
     if not message.guild:
         #Message comes from DM message.  
-        sprintDocument.insertNewRegister(message.content)
+        sprintDocument.insertNewRegister(message.created_at, message.content)
 
     await sid.process_commands(message)

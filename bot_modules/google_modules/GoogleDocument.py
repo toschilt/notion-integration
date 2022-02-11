@@ -1,5 +1,7 @@
 import json
+from queue import Empty
 from tracemalloc import start
+from urllib import request
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -18,7 +20,9 @@ class GoogleDocument:
             jsonCredentials, scopes = self.scopes)
         
         self.service = build('docs', 'v1', credentials = credentials)
+        self.lastIndex = None
         self.requests = []
+        
 
     #Gets the entire document structure and contents.
     def retrieveAllDocumentAsJSON(self):
@@ -44,6 +48,17 @@ class GoogleDocument:
             }
         )
 
+    #Insert some text at the document's end.
+    #TODO Maybe there is a better way to get last index with persistent storage.
+    def insertTextAtLastIndex(self, text):
+        #Gets the last index of the document.
+        if self.lastIndex is None:
+            documentInfo = self.retrieveAllDocumentAsJSON()
+            self.lastIndex = documentInfo["body"]["content"][-1]["endIndex"] - 1
+
+        self.insertTextAtIndex(text, self.lastIndex)
+        self.lastIndex += len(text)
+
     #Execute the batchUpdates changes and cleans the requests dict.
     def executeChanges(self):
         result = self.service.documents().batchUpdate(
@@ -51,5 +66,6 @@ class GoogleDocument:
             body={'requests': self.requests}).execute()
 
         self.requests = []
-        
+        self.lastIndex = None
+
         return result

@@ -8,13 +8,9 @@ class SprintDocument(GoogleDocument):
     def __init__(self, jsonCredentials, documentID):
         super().__init__(jsonCredentials, documentID)
 
-    def insertNewRegister(self, text):
-        #Gets the last index of the document.
-        documentInfo = self.retrieveAllDocumentAsJSON()
-        lastIndex = documentInfo["body"]["content"][-1]["endIndex"] - 1
-        
-        newTextSize = len(text)
-        #endIndex = lastIndex + newTextSize
-
-        self.insertTextAtIndex(text, lastIndex)
+    #Insert a new sprint register. Needs the date and text.
+    def insertNewRegister(self, date, text):
+        self.insertTextAtLastIndex(str(date))
+        self.insertTextAtLastIndex("\n")
+        self.insertTextAtLastIndex(text)
         self.executeChanges()
