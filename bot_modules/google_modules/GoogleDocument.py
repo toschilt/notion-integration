@@ -59,6 +59,10 @@ class GoogleDocument:
         self.insertTextAtIndex(text, self.lastIndex)
         self.lastIndex += len(text)
 
+    #Insert a line in the document.
+    def skipLine(self):
+        self.insertTextAtLastIndex("\n")
+
     #Execute the batchUpdates changes and cleans the requests dict.
     def executeChanges(self):
         result = self.service.documents().batchUpdate(
