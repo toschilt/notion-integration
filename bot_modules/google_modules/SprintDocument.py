@@ -11,6 +11,7 @@ class SprintDocument(GoogleDocument):
     #Insert a new sprint register. Needs the date and text.
     def insertNewRegister(self, date, text):
         self.skipLine()
+        self.skipLine()
         self.insertTextAtLastIndex(str(date))
         self.skipLine()
         self.insertTextAtLastIndex(text)
