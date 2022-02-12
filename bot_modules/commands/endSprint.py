@@ -2,6 +2,7 @@
 #Sends a message to the members of a project.
 
 from bot_modules.config import jsonUsersRegisteredPath
+from bot_modules.config import jsonTextOut
 
 from bot_modules.utils import readJSONFileAsDict
 
@@ -36,7 +37,8 @@ async def endSprint(context):
                         targetUser = await context.message.guild.fetch_member(int(user))
 
                         if targetUser is not None:
-                            await targetUser.send("AEEEEEEEEEEEEEE")
+                            textMessage = readJSONFileAsDict(jsonTextOut)["commands"]["endSprint"]
+                            await targetUser.send(textMessage)
                         else:
                             #TODO Log this in a file.
                             print("[endSprint] Usuário não encontrado no servidor para enviar DM.")

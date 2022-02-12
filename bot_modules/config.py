@@ -22,15 +22,16 @@ if not os.path.exists(jsonDatabasesRegisteredNotionPath):
         pass
 
 
-#----- GOOGLE INTEGRATION CONFIGURATIONS -----#
+#----- GOOGLE INTEGRATION CONFIGURATIONS -----
 googleModulesPath = botModulesPath + "/google_modules"
-jsonGoogleKey = googleModulesPath + "/google-rmautobot-key.json"
+jsonGoogleKey = googleModulesPath + "/credentials.json"
 
 
 
 #----- BOT CONFIGURATIONS -----
 jsonUsersRegisteredPath = jsonDatabasesPath + "/users.json"
 jsonSpecialDatabases = jsonDatabasesPath + "/special_databases.json"
+jsonTextOut = botModulesPath + "/textOut.json"
 
 #Check if the JSON user file exists. If not, create it.
 if not os.path.exists(jsonUsersRegisteredPath):
@@ -42,7 +43,7 @@ if not os.path.exists(jsonSpecialDatabases):
     with open(jsonSpecialDatabases, 'w'):
         pass
 
-
+    
 
 #----- BOT START -----
 #TODO Elaborate a cool description for the bot.

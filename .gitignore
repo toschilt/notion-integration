@@ -2,4 +2,8 @@ __pycache__
 secrets.py
 
 logs
-*.json
+
+credentials.json
+registered_notion.json
+special_databases.json
+users.json
