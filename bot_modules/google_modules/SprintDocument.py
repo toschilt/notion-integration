@@ -9,10 +9,12 @@ class SprintDocument(GoogleDocument):
         super().__init__(jsonCredentials, documentID)
 
     #Insert a new sprint register. Needs the date and text.
-    def insertNewRegister(self, date, text):
+    def insertNewRegister(self, date, userName, text):
         self.skipLine()
         self.skipLine()
         self.insertTextAtLastIndex(str(date))
+        self.skipLine()
+        self.insertTextAtLastIndex(str(userName))
         self.skipLine()
         self.insertTextAtLastIndex(text)
         self.executeChanges()
