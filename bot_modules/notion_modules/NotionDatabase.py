@@ -1,6 +1,7 @@
-from bot_modules.notion_modules import NotionConstants
-import requests
 import json
+import requests
+
+from bot_modules.notion_modules import NotionConstants
 
 #Encapsule all the comunication within a specific Notion database.
 class NotionDatabase:
@@ -187,7 +188,7 @@ class NotionDatabase:
                 elif propType == "select":
                     propValue = self.getSelectContent(propInfo)
                 elif propType == "multi_select":
-                    selections = self.getMultiSelectContent(propInfo)
+                    propValue = self.getMultiSelectContent(propInfo)
                 elif propType == "date":
                     propValue = self.getDateContent(propInfo)
                 elif propType == "email":
