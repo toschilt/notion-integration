@@ -52,17 +52,116 @@ class NotionDatabase:
         response = self.getDatabaseDataInJSON()
         return json.dumps(response, indent = q_indent)
 
-    #Gets the data from a ID database and formats it to a
-    #human-friendly table
+    #Gets the content of a field with "title" type. jsonData needs to be the dictionary with type info.
+    def getTitleContent(self, jsonData):
+        if jsonData["type"] == "title":
+            return jsonData["title"][0]["text"]["content"]
+        else:
+            print("[getTitleContent] Tipo inválido! Precisa ser do tipo 'title'")
+            return None
+
+    #Gets the content of a field with "rich_text" type. jsonData needs to be the dictionary with type info.
+    def getRichTextContent(self, jsonData):
+        if jsonData["type"] == "rich_text":
+            return jsonData["title"][0]["text"]["content"]
+        else:
+            print("[getRichTextContent] Tipo inválido! Precisa ser do tipo 'rich_text'")
+            return None
+
+    #Gets the content of a field with "number" type. jsonData needs to be the dictionary with type info.
+    def getNumberContent(self, jsonData):
+        if jsonData["type"] == "number":
+            return str(jsonData["number"])
+        else:
+            print("[getNumberContent] Tipo inválido! Precisa ser do tipo 'number'")
+            return None
+
+    #Gets the content of a field with "select" type. jsonData needs to be the dictionary with type info.
+    def getSelectContent(self, jsonData):
+        if jsonData["type"] == "select":
+            return jsonData["select"]["name"]
+        else:
+            print("[getSelectContent] Tipo inválido! Precisa ser do tipo 'select'")
+            return None
+
+    #Gets the content of a field with "multi_select" type. jsonData needs to be the dictionary with type info.
+    def getMultiSelectContent(self, jsonData):
+        if jsonData["type"] == "multi_select":
+            tags = []
+            for tag in jsonData["multi_select"]:
+                tags.append(tag["name"])
+                
+            #Checks if it is empty. 
+            if tags:
+                return tags
+            else:
+                return None
+        else:
+            print("[getMultiSelectContent] Tipo inválido! Precisa ser do tipo 'multi_select'")
+            return None
+
+    #Gets the content of a field with "date" type. jsonData needs to be the dictionary with type info.
+    #TODO Implement finish date
+    def getDateContent(self, jsonData):
+        if jsonData["type"] == "date":
+            return jsonData["date"]["start"]
+        else:
+            print("[getDateContent] Tipo inválido! Precisa ser do tipo 'date'")
+            return None
+
+    #Gets the content of a field with "email" type. jsonData needs to be the dictionary with type info.
+    def getEmailContent(self, jsonData):
+        if jsonData["type"] == "email":
+            return jsonData["email"]
+        else:
+            print("[getEmailContent] Tipo inválido! Precisa ser do tipo 'email'")
+            return None
+
+    #Gets the content of a field with "phone_number" type. jsonData needs to be the dictionary with type info.
+    def getPhoneNumberContent(self, jsonData):
+        if jsonData["type"] == "phone_number":
+            return jsonData["phone_number"]
+        else:
+            print("[getPhoneNumberContent] Tipo inválido! Precisa ser do tipo 'phone_number'")
+            return None
+
+    #Gets the content of a field with "person" type. jsonData needs to be the dictionary with type info.
+    #TODO Insert new person info.
+    def getPeopleContent(self, jsonData):
+        if jsonData["type"] == "people":
+            people = []
+            
+            #Gets the name of all people.
+            for person in jsonData["people"]:
+                people.append(person["name"])
+
+            if people:
+                return people
+            else:
+                return None
+        else:
+            print("[getPeopleContent] Tipo inválido! Precisa ser do tipo 'people'")
+            return None
+
+    #Gets the data from a ID database and returns only the field required.
+    def verticalSearch(self, primaryKeyFieldName, primaryKeyValue):
+        allData = self.getDatabaseDataInJSON()["results"]
+
+        #for result in allData:
+        #    if result["propert"]
+        
+
+    #Gets the data from a ID database and formats it to a human-friendly table
     #TODO Super ugly - needs refactoring
+    #TODO Enable table customization
+    #TODO Get file and relation infos
     def getDatabaseDataToTablePrint(self):
-        response = self.getDatabaseData()
-        tableRows = response.json()["results"]
+        response = self.getDatabaseDataInJSON()
+        tableRows = response["results"]
 
         strLoad = ''
 
-        #TODO Enable table customization
-        #Gets the table header
+        #Gets the table header (properites names)
         for column in tableRows[0]["properties"]:
             strLoad = strLoad + column
             strLoad = strLoad + " | "
@@ -70,49 +169,36 @@ class NotionDatabase:
         strLoad = strLoad + "\n"
 
         for row in tableRows:
+            #Gets all properties of a single entry.
             columns = row["properties"]
+
             for prop in columns:
-                propType = columns[prop]["type"]
+                #Gets info about a single property.
+                propInfo = columns[prop]
+                propType = propInfo["type"]
                 propValue = None
 
                 if propType == "title":
-                    propValue = columns[prop][propType][0]["text"]["content"]
+                    propValue = self.getTitleContent(propInfo)
                 elif propType == "rich_text":
-                    propValue = columns[prop][propType][0]["text"]["content"]
+                    propValue = self.getRichTextContent(propInfo)
                 elif propType == "number":
-                    propValue = str(columns[prop][propType])
+                    propValue = self.getNumberContent(propInfo)
                 elif propType == "select":
-                    propValue = columns[prop][propType]["name"]
+                    propValue = self.getSelectContent(propInfo)
                 elif propType == "multi_select":
-                    selections = columns[prop][propType]
-                    values = ''
-                    for option in selections:
-                        values = values + option["name"]
-                        values = values + ", "
-                    
-                    if values == '':
-                        propValue = None
-                    else:
-                        propValue = values
-                #TODO Implement finish date
+                    selections = self.getMultiSelectContent(propInfo)
                 elif propType == "date":
-                    propValue = columns[prop][propType]["start"]
-                #TODO Implement more features in people property?
-                #TODO Implement getting more than one person
-                #elif propType == "people":
-                #    propValue = columns[prop][propType][0]["name"]
-                #TODO Implement checking all the files
-                #elif propType == "files":
-                #   propValue = columns[prop][propType][0]
+                    propValue = self.getDateContent(propInfo)
                 elif propType == "email":
-                    propValue = columns[prop][propType]
+                    propValue = self.getEmailContent(propInfo)
                 elif propType == "phone_number":
-                    propValue = columns[prop][propType]
-
-                #TODO Implement relation property
+                    propValue = self.getPhoneNumberContent(propInfo)
+                elif propType == "people":
+                    propValue = self.getPeopleContent(propInfo)[0]
 
                 if(propValue != None):
-                    strLoad = strLoad + propValue
+                    strLoad = strLoad + str(propValue)
                 else:
                     strLoad = strLoad + "null"
 
