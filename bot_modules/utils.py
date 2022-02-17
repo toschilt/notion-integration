@@ -5,6 +5,7 @@ import os
 import json
 from bot_modules.config import *
 
+#Reads the JSON file as a python dictionary
 def readJSONFileAsDict(path):
     data = {}
     isEmpty = False
