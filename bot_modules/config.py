@@ -29,6 +29,7 @@ jsonGoogleKey = googleModulesPath + "/credentials.json"
 
 
 #----- BOT CONFIGURATIONS -----
+jsonCommandsAlias = jsonDatabasesPath + "/commands_alias.json"
 jsonUsersRegisteredPath = jsonDatabasesPath + "/users.json"
 jsonSpecialDatabases = jsonDatabasesPath + "/special_databases.json"
 jsonTextOut = jsonDatabasesPath + "/textOut.json"

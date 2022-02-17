@@ -1,0 +1,13 @@
+{
+    "help": [],
+    "retrieveTasks": ["rt", "tasks", "tarefas"],
+    "listWorkspaces": ["lw"],
+    "listDatabases": ["ld"],
+    "registerWorkspace": ["rw"],
+    "registerDatabase": ["rd"],
+    "replicateDatabase": ["repd"],
+    "registerUser": ["ru"],
+    "setSpecialDatabase": ["sed"],
+    "endSprint": ["es"],
+    "response": ["r"]
+}
