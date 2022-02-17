@@ -1,3 +1,4 @@
+from dataclasses import field
 import json
 import requests
 
@@ -144,18 +145,40 @@ class NotionDatabase:
             print("[getPeopleContent] Tipo inválido! Precisa ser do tipo 'people'")
             return None
 
-    #Gets the data from a ID database and returns only the field required.
-    def verticalSearch(self, primaryKeyFieldName, primaryKeyValue):
-        allData = self.getDatabaseDataInJSON()["results"]
+    #Gets info from a Notion database field by its name. jsonData must be the info of a single entry of Notion database.
+    #TODO Get file and relation infos
+    def getFieldByName(self, jsonData, fieldName):
+        entryProperties = jsonData["properties"]
 
-        #for result in allData:
-        #    if result["propert"]
-        
+        try:
+            propInfo = entryProperties[fieldName]
+            propType = propInfo["type"]
+
+            if propType == "title":
+                return self.getTitleContent(propInfo)
+            elif propType == "rich_text":
+                return self.getRichTextContent(propInfo)
+            elif propType == "number":
+                return self.getNumberContent(propInfo)
+            elif propType == "select":
+                return self.getSelectContent(propInfo)
+            elif propType == "multi_select":
+                return self.getMultiSelectContent(propInfo)
+            elif propType == "date":
+                return self.getDateContent(propInfo)
+            elif propType == "email":
+                return self.getEmailContent(propInfo)
+            elif propType == "phone_number":
+                return self.getPhoneNumberContent(propInfo)
+            elif propType == "people":
+                return self.getPeopleContent(propInfo)[0]
+
+        except:
+            print("[getFieldByName] Informação em json incorreta ou nome do campo incorreto!")
+            return None
 
     #Gets the data from a ID database and formats it to a human-friendly table
-    #TODO Super ugly - needs refactoring
     #TODO Enable table customization
-    #TODO Get file and relation infos
     def getDatabaseDataToTablePrint(self):
         response = self.getDatabaseDataInJSON()
         tableRows = response["results"]
@@ -175,28 +198,7 @@ class NotionDatabase:
 
             for prop in columns:
                 #Gets info about a single property.
-                propInfo = columns[prop]
-                propType = propInfo["type"]
-                propValue = None
-
-                if propType == "title":
-                    propValue = self.getTitleContent(propInfo)
-                elif propType == "rich_text":
-                    propValue = self.getRichTextContent(propInfo)
-                elif propType == "number":
-                    propValue = self.getNumberContent(propInfo)
-                elif propType == "select":
-                    propValue = self.getSelectContent(propInfo)
-                elif propType == "multi_select":
-                    propValue = self.getMultiSelectContent(propInfo)
-                elif propType == "date":
-                    propValue = self.getDateContent(propInfo)
-                elif propType == "email":
-                    propValue = self.getEmailContent(propInfo)
-                elif propType == "phone_number":
-                    propValue = self.getPhoneNumberContent(propInfo)
-                elif propType == "people":
-                    propValue = self.getPeopleContent(propInfo)[0]
+                propValue = self.getFieldByName(row, prop)
 
                 if(propValue != None):
                     strLoad = strLoad + str(propValue)
@@ -208,6 +210,17 @@ class NotionDatabase:
             strLoad = strLoad + "\n"
 
         return strLoad
+
+    #Gets the data from a ID database and returns only the field required. jsonData must be the info as obtained by Notion API.
+    def verticalSearch(self, jsonData, primaryKeyFieldName, primaryKeyValue):
+        tableRows = jsonData["results"]
+
+        for row in tableRows:
+            columns = row["properties"]
+            primaryKeyField = columns[primaryKeyFieldName]
+
+        #for result in allData:
+        #    if result["propert"]
     
     #Creates and insert a new page in the database.
     #Needs a python dictionary to be JSON serialized.
