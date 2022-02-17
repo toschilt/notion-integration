@@ -42,7 +42,7 @@ async def checkPermission(context, command):
     targetUser = usersRegistered[str(context.author.id)]
     targetUserRoles = targetUser["roles"]
 
-    if "everyone" in targetPermission or targetPermission in targetUserRoles:
+    if "everyone" in targetPermission or set(targetPermission).issubset(set(targetUserRoles)):
         return True
     else:
         await context.send("Permissão negada!")
