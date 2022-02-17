@@ -65,7 +65,7 @@ class NotionDatabase:
     #Gets the content of a field with "rich_text" type. jsonData needs to be the dictionary with type info.
     def getRichTextContent(self, jsonData):
         if jsonData["type"] == "rich_text":
-            return jsonData["title"][0]["text"]["content"]
+            return jsonData["rich_text"][0]["text"]["content"]
         else:
             print("[getRichTextContent] Tipo inválido! Precisa ser do tipo 'rich_text'")
             return None
@@ -210,18 +210,19 @@ class NotionDatabase:
             strLoad = strLoad + "\n"
 
         return strLoad
-
-    #Gets the data from a ID database and returns only the field required. jsonData must be the info as obtained by Notion API.
-    def verticalSearch(self, jsonData, primaryKeyFieldName, primaryKeyValue):
+    
+        #Gets the data from a ID database and returns only the field required. jsonData must be the info as obtained by Notion API.
+    def verticalSearch(self, jsonData, primaryKeyFieldName, primaryKeyTargetValue):
         tableRows = jsonData["results"]
 
         for row in tableRows:
-            columns = row["properties"]
-            primaryKeyField = columns[primaryKeyFieldName]
+            primaryKeyCurrentValue = self.getFieldByName(row, primaryKeyFieldName)
 
-        #for result in allData:
-        #    if result["propert"]
-    
+            if primaryKeyCurrentValue == primaryKeyTargetValue:
+                return row
+
+        return None
+
     #Creates and insert a new page in the database.
     #Needs a python dictionary to be JSON serialized.
     def insertEntry(self, dataJSON):

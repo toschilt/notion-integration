@@ -27,7 +27,7 @@ async def response(context):
 
     #Construct the Notion database object. 
     projectDatabase = NotionDatabase(privateKey, projectDatabaseID)
-    projectsInfo = projectDatabase.getDatabaseDataInJSON()["results"]
+    projectsInfo = projectDatabase.getDatabaseDataInJSON()
     
     #Gets info about the member that calls the response command.
     users = readJSONFileAsDict(jsonUsersRegisteredPath)
@@ -36,14 +36,21 @@ async def response(context):
 
     #Gets the Google Document ID from the table.
     googleDocumentID = None
-    for project in projectsInfo:
-        if project["properties"]["Nome"]["title"][0]["text"]["content"] == userProject:
-            googleDocumentID = project["properties"]["[GD] Sprint Info"]["rich_text"][0]["text"]["content"]
+    targetEntry = projectDatabase.verticalSearch(projectsInfo, "Nome", userProject)
+    
+    if targetEntry is not None:
+        googleDocumentID = projectDatabase.getFieldByName(targetEntry, "[GD] Sprint Info")
+        
+        if googleDocumentID is not None:
+            #Creates the Google Document object and inserts a new register.
+            sprintDocument = SprintDocument(jsonGoogleKey, googleDocumentID)
 
-    #Creates the Google Document object and inserts a new register.
-    sprintDocument = SprintDocument(jsonGoogleKey, googleDocumentID)
+            sprintDocument.insertNewRegister(
+                context.message.created_at.date(),
+                userName, 
+                context.message.content[3:])
+        else:
+            await context.send("Não há um documento do Google cadastrado para este projeto!")
 
-    sprintDocument.insertNewRegister(
-        context.message.created_at.date(),
-        userName, 
-        context.message.content[3:])
+    else:
+        await context.send("Projeto inválido!")
