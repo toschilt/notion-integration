@@ -32,6 +32,7 @@ jsonGoogleKey = googleModulesPath + "/credentials.json"
 jsonUsersRegisteredPath = jsonDatabasesPath + "/users.json"
 jsonSpecialDatabases = jsonDatabasesPath + "/special_databases.json"
 jsonTextOut = jsonDatabasesPath + "/textOut.json"
+jsonPermissions = jsonDatabasesPath + "/permissions.json"
 
 #Check if the JSON user file exists. If not, create it.
 if not os.path.exists(jsonUsersRegisteredPath):

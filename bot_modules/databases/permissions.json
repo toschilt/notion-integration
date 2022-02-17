@@ -1,0 +1,13 @@
+{
+    "help": ["everyone"],
+    "retrieveTasks": ["everyone"],
+    "listWorkspaces": ["everyone"],
+    "listDatabases": ["everyone"],
+    "registerWorkspace": ["everyone"],
+    "registerDatabase": ["everyone"],
+    "replicateDatabase": ["everyone"],
+    "registerUser": ["everyone"],
+    "setSpecialDatabase": ["Diretor", "Coordenador"],
+    "endSprint": ["Gerente de Projeto"],
+    "response": ["everyone"]
+}

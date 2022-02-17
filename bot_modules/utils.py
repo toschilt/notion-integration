@@ -4,6 +4,8 @@
 import os
 import json
 from bot_modules.config import *
+from bot_modules.config import jsonPermissions
+from bot_modules.config import jsonUsersRegisteredPath
 
 #Reads the JSON file as a python dictionary
 def readJSONFileAsDict(path):
@@ -30,3 +32,18 @@ def readJSONFileAsDict(path):
             return None
 
     return data
+
+#Check if the command can be executed by the user.
+async def checkPermission(context, command):
+    permissionList = readJSONFileAsDict(jsonPermissions)
+    targetPermission = permissionList[command]
+
+    usersRegistered = readJSONFileAsDict(jsonUsersRegisteredPath)
+    targetUser = usersRegistered[str(context.author.id)]
+    targetUserRoles = targetUser["roles"]
+
+    if "everyone" in targetPermission or targetPermission in targetUserRoles:
+        return True
+    else:
+        await context.send("Permissão negada!")
+        return False
