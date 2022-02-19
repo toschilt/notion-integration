@@ -7,3 +7,5 @@ credentials.json
 registered_notion.json
 special_databases.json
 users.json
+
+*.mp3
