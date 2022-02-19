@@ -68,3 +68,8 @@ async def endSprint(context):
 async def response(context):
     if await checkPermission(context, "response"):
         await cmd.response.response(context)
+
+@sid.command(aliases = commands_alias["play"])
+async def play(context, song):
+    if await checkPermission(context, "play"):
+        await cmd.play.play(context, song)

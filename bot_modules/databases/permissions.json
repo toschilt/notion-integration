@@ -9,5 +9,6 @@
     "registerUser": ["everyone"],
     "setSpecialDatabase": ["Diretor", "Coordenador"],
     "endSprint": ["Gerente de Projeto"],
-    "response": ["everyone"]
+    "response": ["everyone"],
+    "play": ["everyone"]
 }

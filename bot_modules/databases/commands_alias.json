@@ -9,5 +9,6 @@
     "registerUser": ["ru"],
     "setSpecialDatabase": ["sed"],
     "endSprint": ["es"],
-    "response": ["r"]
+    "response": ["r"],
+    "play": ["p"]
 }

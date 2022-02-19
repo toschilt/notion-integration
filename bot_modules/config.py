@@ -29,6 +29,8 @@ jsonGoogleKey = googleModulesPath + "/credentials.json"
 
 
 #----- BOT CONFIGURATIONS -----
+audio_files_folder = botModulesPath + "/audio_modules/audio_files"
+jsonMusicFiles = jsonDatabasesPath + "/music_files.json"
 jsonCommandsAlias = jsonDatabasesPath + "/commands_alias.json"
 jsonUsersRegisteredPath = jsonDatabasesPath + "/users.json"
 jsonSpecialDatabases = jsonDatabasesPath + "/special_databases.json"
