@@ -1,7 +1,6 @@
 #Discord bot command.
 #Plays something in the user voice channel.
 
-import asyncio
 from discord import FFmpegPCMAudio
 
 from bot_modules.utils import readJSONFileAsDict
