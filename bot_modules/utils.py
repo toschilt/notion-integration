@@ -1,6 +1,7 @@
 #TODO Implement log function to mantain track of the commands.
 #TODO Implement .json manipulations
 
+from logging import exception
 import os
 import json
 from bot_modules.config import *
@@ -38,9 +39,12 @@ async def checkPermission(context, command):
     permissionList = readJSONFileAsDict(jsonPermissions)
     targetPermission = permissionList[command]
 
-    usersRegistered = readJSONFileAsDict(jsonUsersRegisteredPath)
-    targetUser = usersRegistered[str(context.author.id)]
-    targetUserRoles = targetUser["roles"]
+    try:
+        usersRegistered = readJSONFileAsDict(jsonUsersRegisteredPath)
+        targetUser = usersRegistered[str(context.author.id)]
+        targetUserRoles = targetUser["roles"]
+    except Exception as e: 
+        pass
 
     if "everyone" in targetPermission or set(targetPermission).issubset(set(targetUserRoles)):
         return True
